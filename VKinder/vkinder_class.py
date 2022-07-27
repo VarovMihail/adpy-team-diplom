@@ -35,12 +35,11 @@ class VKinder:
                   'sex': self.gender,
                   'fields': 'home_town'}
         res = requests.get(self.base_url + method, params={**params, **self.params}).json()
-        l = []
+        l = {}
         for el in res['response']['items']:
             if 'home_town' in el:
-                l.append([f'{el["first_name"]} {el["last_name"]}\n'
-                           f'https://vk.com/id{el["id"]}\n'
-                           f'{self.get_top_photo(el["id"])}\n'])
+                l[f'{el["first_name"]} {el["last_name"]}\nhttps://vk.com/id{el["id"]}\n'] = self.get_top_photo(el["id"])
+
         return l
             # if 'home_town' in el:
             #     yield (f'{el["first_name"]} {el["last_name"]}\n'
